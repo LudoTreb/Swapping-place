@@ -18,7 +18,7 @@ class CustomUserTest(TestCase):
 
     def test_create_superuser(self):
         User = get_user_model()
-        user = User.objects.create_user(
+        user = User.objects.create_superuser(
             username="superuser",
             email="superuser@email.com",
             password="testpass123",
