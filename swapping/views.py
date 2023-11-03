@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from .models import SwappingProduct
 
-# Create your views here.
+
+class SwappingProductListView(ListView):
+    model = SwappingProduct
+    context_object_name = "swapping_product_list"
+    template_name = "swapping/swapping_product_list.html"
