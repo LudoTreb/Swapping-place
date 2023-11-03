@@ -35,10 +35,17 @@
                 <a class="nav-link" href="{% url 'login' %}">Log In</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
-              </li>
-              {% endif %}
+                  <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link btn btn-sm btn-outline-secondary" href="#" role="button">Add your clothes</a>
+                </li>
             </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search articles" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
           </div>
         </div>
       </nav>
