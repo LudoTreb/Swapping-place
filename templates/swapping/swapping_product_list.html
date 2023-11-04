@@ -4,11 +4,10 @@
 {% block title %}Swapping Product{% endblock title %}
 
 {% block content %}
+    <p>message test</p>
     {% for product in swapping_product_list %}
         <div>
             <h2><a href="">{{ product.title }}</a></h2>
         </div>
-    
     {% endfor %}
-
 {% endblock content %}
