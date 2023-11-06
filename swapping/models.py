@@ -12,12 +12,12 @@ class SwappingProduct(models.Model):
         kid = 'Kid', 'kid'
 
     class SizeChoices(models.TextChoices):
-        XS = 'XS', 'xs'
-        S = 'S', 's'
-        M = 'M', 'm'
-        L = 'L', 'l'
-        XL = 'XL', 'xl'
-        XXL = 'XXL', 'xxl'
+        xs = 'XS', 'xs'
+        s = 'S', 's'
+        m = 'M', 'm'
+        l = 'L', 'l'
+        xl = 'XL', 'xl'
+        xxl = 'XXL', 'xxl'
 
     class ProductConditionChoices(models.TextChoices):
         new = 'New', 'new'
