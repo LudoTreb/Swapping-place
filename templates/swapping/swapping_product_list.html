@@ -5,6 +5,69 @@
 
 {% block content %}
 <div class="container-sm d-flex justify-content-around mt-5">
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Genre
+        </button>
+        <ul class="dropdown-menu">
+            {% for sex_key, sex_value in swapping_product_list.model.SexChoices.choices %}
+            <li><a class="dropdown-item" href="#">{{ sex_value }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Category
+        </button>
+        <ul class="dropdown-menu">
+            {% for category_key, category_value in swapping_product_list.model.CategoryChoices.choices %}
+            <li><a class="dropdown-item" href="#">{{ category_value }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Size
+        </button>
+        <ul class="dropdown-menu">
+            {% for size_key, size_value in swapping_product_list.model.SizeChoices.choices %}
+            <li><a class="dropdown-item" href="#">{{ size_value }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Condition
+        </button>
+        <ul class="dropdown-menu">
+            {% for condition_key, condition_value in swapping_product_list.model.ProductConditionChoices.choices %}
+            <li><a class="dropdown-item" href="#">{{ condition_value }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Color
+        </button>
+        <ul class="dropdown-menu">
+            {% for color_key, color_value in swapping_product_list.model.ColorChoices.choices %}
+            <li><a class="dropdown-item" href="#">{{ color_value }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Quality
+        </button>
+        <ul class="dropdown-menu">
+            {% for quality_key, quality_value in swapping_product_list.model.QualityChoices.choices %}
+            <li><a class="dropdown-item" href="#">{{ quality_value }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="container-sm d-flex justify-content-around mt-5">
     {% for product in swapping_product_list %}
     <a class="text-decoration-none text-reset" href="#">
         <div class="card" style="width: 18rem;">
@@ -12,7 +75,7 @@
                 <rect width="100%" height="100%" fill="#868e96"></rect>
             </svg>
             <div class="card-header text-center bg-danger text-white">
-                Réservé (if is_reserved)
+                Reserved (if is_reserved)
             </div>
             <div class="card-body">
                 <div class="d-flex">
