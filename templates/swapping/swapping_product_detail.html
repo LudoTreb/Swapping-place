@@ -11,30 +11,46 @@
         <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
             <rect width="100%" height="100%" fill="#868e96"></rect>
         </svg>
-        <img src="#" alt="#">
+        <img src="#" alt="">
     </div>
-    <div class="container row m-3">
-        <p class="col col-6 fw-bold">{{ swapping_product.title|upper }}</p>
-        <p class="col">date</p>
-        <p class="col">distance</p>
-        <i class="col bi bi-heart-fill"></i>
-    </div>
-    <div class="container bg-light row">
-        <div class="container col mt-2">
-            <p class="text-center">Taile</p>
-            <p class="text-center">{{ swapping_product.size }}</p>
-        </div>
-        <div class="container col mt-2">
-            <p class="text-center">Condition</p>
-            <p class="text-center">{{ swapping_product.product_condition }}</p>
-        </div>
-        <div class="container col mt-2">
-            <p class="text-center">Color</p>
-            <p class="col text-center">{{ swapping_product.color }}</p>
+    <div class="container text-center p-3">
+        <div class="row align-items-center">
+            <p class="col-6 fs-4 fw-bold">{{ swapping_product.title|upper }}</p>
+            <p class="col ">date</p>
+            <p class="col ">distance</p>
+            <i class="col align-self-start bi bi-heart-fill fs-3"></i>
         </div>
         
     </div>
-
+    <div class="container bg-light row">
+        <div class="container col p-2">
+            <p class="text-center">Size</p>
+            <p class="text-center fw-bold">{{ swapping_product.size }}</p>
+        </div>
+        <div class="container col p-2">
+            <p class="text-center">Condition</p>
+            <p class="text-center fw-bold">{{ swapping_product.product_condition }}</p>
+        </div>
+        <div class="container col p-2">
+            <p class="text-center">Color</p>
+            <p class="col text-center fw-bold">{{ swapping_product.color }}</p>
+        </div>
+    </div>
+    <div class="d-grid mx-auto">
+        <button type="button" class="btn btn-success btn-lg m-5">Reserve</button>
+    </div>
+    <div class="border p-3">
+        <p class="text-body-secondary">Description:</p>
+        <p>{{ swapping_product.description }}</p>
+    </div>
+    <div  class="border mt-3 p-3">
+        <p>Carte géolocalisation</p>
+    </div>
+    <div class="d-grid gap-3 d-md-block p-3">
+        <button type="button" class="btn btn-info btn-lg">Message</button>
+        <button type="button" class="btn btn-success btn-lg">Reserve</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg">Back</button>
+    </div>
 </div>
 
 {% endblock content %}
