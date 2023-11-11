@@ -69,7 +69,7 @@
 
 <div class="container-sm d-flex justify-content-around mt-5">
     {% for product in swapping_product_list %}
-    <a class="text-decoration-none text-reset" href="#">
+    <a class="text-decoration-none text-reset" href="{{ product.get_absolute_url }}">
         <div class="card" style="width: 18rem;">
             <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <rect width="100%" height="100%" fill="#868e96"></rect>
