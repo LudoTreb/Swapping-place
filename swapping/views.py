@@ -43,3 +43,4 @@ class SwappingProductCreationView(CreateView):
     model = SwappingProduct
     form_class = SwappingProductCreationForm
     template_name = "swapping/swapping_product_new.html"
+    success_url = reverse_lazy("swapping_product_list")
