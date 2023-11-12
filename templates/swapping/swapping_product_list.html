@@ -83,17 +83,22 @@
                     if favori<i class="bi bi-heart"></i>
                     <i class="bi bi-heart-fill"></i>
                 </div>
+                <hr>
                 <span class="fs-6">{{ product.product_condition }}</span> &middot;
                 <span class="fs-6">{{ product.size }}</span> &middot;
                 <span class="fs-6">{{ product.sex }}</span>
-                
             </div>
+            
+            <div class="card-footer p-3">
+                <a class="btn btn-outline-dark btn-sm me-2" href="{% url "swapping_product_edit" product.pk %}">Edit</a>
+                <a class="btn btn-outline-danger btn-sm" href="{% url "swapping_product_delete" product.pk %}">Delete</a>
+            </div>
+
             <div class="card-footer fs-6 text-body-secondary">
-                date et distance 2 days ago 8km
+                2 days ago 8km
             </div>
         </div>
     </a>
     {% endfor %}
 </div>
-
 {% endblock content %}
