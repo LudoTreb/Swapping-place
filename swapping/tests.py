@@ -1,7 +1,13 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from .models import SwappingProduct
-from .views import SwappingProductListView, SwappingProductDetailView
+from .views import (
+    SwappingProductListView,
+    SwappingProductDetailView,
+    SwappingProductCreationView,
+    SwappingProductUpdateView,
+    SwappingProductDeleteView,
+)
 
 
 class SwappingProductTests(TestCase):
@@ -56,10 +62,44 @@ class SwappingProductTests(TestCase):
 
     def test_swapping_product_detail_view(self):
         response = self.client.get(self.swapping_product.get_absolute_url())
-        view = resolve("/swapping/1/")
+        view = resolve(f"/swapping/{self.swapping_product.pk}/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Short")
         self.assertTemplateUsed(response, "swapping/swapping_product_detail.html")
         self.assertEqual(
             view.func.__name__, SwappingProductDetailView.as_view().__name__
+        )
+
+    def test_swapping_product_update_view(self):
+        response = self.client.get(
+            reverse("swapping_product_edit", kwargs={"pk": self.swapping_product.pk})
+        )
+        view = resolve(f"/swapping/{self.swapping_product.pk}/edit/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Edit")
+        self.assertTemplateUsed(response, "swapping/swapping_product_edit.html")
+        self.assertEqual(
+            view.func.__name__, SwappingProductUpdateView.as_view().__name__
+        )
+
+    def test_swapping_product_delete_view(self):
+        response = self.client.get(
+            reverse("swapping_product_delete", kwargs={"pk": self.swapping_product.pk})
+        )
+        view = resolve(f"/swapping/{self.swapping_product.pk}/delete/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Are you sure you want to delete your product:")
+        self.assertTemplateUsed(response, "swapping/swapping_product_delete.html")
+        self.assertEqual(
+            view.func.__name__, SwappingProductDeleteView.as_view().__name__
+        )
+
+    def test_swapping_product_create_view(self):
+        response = self.client.get(reverse("swapping_product_new"))
+        view = resolve("/swapping/new/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "New clothe")
+        self.assertTemplateUsed(response, "swapping/swapping_product_new.html")
+        self.assertEqual(
+            view.func.__name__, SwappingProductCreationView.as_view().__name__
         )
