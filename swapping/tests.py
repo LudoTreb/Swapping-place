@@ -103,3 +103,19 @@ class SwappingProductTests(TestCase):
         self.assertEqual(
             view.func.__name__, SwappingProductCreationView.as_view().__name__
         )
+
+    def test_swapping_product_create_new_clothe(self):
+        new_clothe_data = {
+            "title": "Jogging",
+            "description": "Très confort",
+            "category": SwappingProduct.CategoryChoices.clothing,
+            "sex": SwappingProduct.SexChoices.women,
+            "size": SwappingProduct.SizeChoices.l,
+            "color": SwappingProduct.ColorChoices.red,
+            "product_condition": SwappingProduct.ProductConditionChoices.fair_condition,
+            "quality": SwappingProduct.QualityChoices.good,
+        }
+        response = self.client.post(reverse("swapping_product_new"), new_clothe_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("swapping_product_list"))
+        self.assertTrue(SwappingProduct.objects.filter(title="Jogging").exists())
