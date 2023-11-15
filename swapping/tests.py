@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse, resolve
 from .models import SwappingProduct
@@ -13,15 +14,21 @@ from .views import (
 class SwappingProductTests(TestCase):
     @classmethod
     def setUpTestData(cls):
+        user = get_user_model().objects.create_user(
+            username="ludo",
+            email="ludo@email.com",
+            password="testpass123",
+        )
         cls.swapping_product = SwappingProduct.objects.create(
             title="Short",
             description="Très joli short",
             category="Clothing",
             sex="Women",
             size="S",
-            product_condition="New",
+            condition="New",
             color="Silver",
             quality="Good",
+            owner=user,
         )
 
     def test_swapping_product_listing(self):
@@ -40,8 +47,8 @@ class SwappingProductTests(TestCase):
             SwappingProduct.SizeChoices.s,
         )
         self.assertEqual(
-            self.swapping_product.product_condition,
-            SwappingProduct.ProductConditionChoices.new,
+            self.swapping_product.condition,
+            SwappingProduct.ConditionChoices.new,
         )
         self.assertEqual(
             self.swapping_product.color,
@@ -112,7 +119,7 @@ class SwappingProductTests(TestCase):
             "sex": SwappingProduct.SexChoices.women,
             "size": SwappingProduct.SizeChoices.l,
             "color": SwappingProduct.ColorChoices.red,
-            "product_condition": SwappingProduct.ProductConditionChoices.fair_condition,
+            "condition": SwappingProduct.ConditionChoices.fair_condition,
             "quality": SwappingProduct.QualityChoices.good,
         }
         response = self.client.post(reverse("swapping_product_new"), new_clothe_data)

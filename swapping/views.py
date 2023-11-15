@@ -3,6 +3,9 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from .models import SwappingProduct
 from django.urls import reverse_lazy
 from .forms import SwappingProductCreationForm
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class SwappingProductListView(ListView):
@@ -26,7 +29,7 @@ class SwappingProductUpdateView(UpdateView):
         "size",
         "color",
         "description",
-        "product_condition",
+        "condition",
         "quality",
     )
     template_name = "swapping/swapping_product_edit.html"
@@ -44,3 +47,13 @@ class SwappingProductCreationView(CreateView):
     form_class = SwappingProductCreationForm
     template_name = "swapping/swapping_product_new.html"
     success_url = reverse_lazy("swapping_product_list")
+
+    FIXME  # Problème de validation du formulaire avec le champ owner je pense
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        logger.info(form.cleaned_data)
+        print(form.is_valid())
+        print(form.cleaned_data)
+        print(form.errors)
+        return super().form_valid(form)
