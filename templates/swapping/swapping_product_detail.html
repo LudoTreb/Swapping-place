@@ -7,20 +7,23 @@
 {% block content %}
 
 <div class="container-sm">
-    <div>
-        <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <rect width="100%" height="100%" fill="#868e96"></rect>
-        </svg>
-        <img src="#" alt="">
-    </div>
+        <div class="col align-items-center p-5">
+            <div class="container col-md-4">
+                <img class="img-thumbnail" src="{{ swapping_product.image.url }}" alt=""> 
+            </div>
+        </div>
+
     <div class="container text-center p-3">
         <div class="row align-items-center">
-            <p class="col-6 fs-4 fw-bold">{{ swapping_product.title|upper }}</p>
-            <p class="col ">date</p>
+            <p class="col-6 fs-4 fw-bold text-start">{{ swapping_product.title|upper }}</p>
+            <p class="col ">{{ swapping_product.created_date }}</p>
             <p class="col ">distance</p>
-            <i class="col align-self-start bi bi-heart-fill fs-3"></i>
+            {% if swapping_product.is_favorite %}
+                <i class="col align-self-start fs-3 bi bi-heart-fill "></i>
+            {% else %}
+            <i class="col align-self-start fs-3 bi bi-heart"></i>
+            {% endif %}
         </div>
-        
     </div>
     <div class="container bg-light row">
         <div class="container col p-2">
@@ -29,7 +32,7 @@
         </div>
         <div class="container col p-2">
             <p class="text-center">Condition</p>
-            <p class="text-center fw-bold">{{ swapping_product.product_condition }}</p>
+            <p class="text-center fw-bold">{{ swapping_product.condition }}</p>
         </div>
         <div class="container col p-2">
             <p class="text-center">Color</p>

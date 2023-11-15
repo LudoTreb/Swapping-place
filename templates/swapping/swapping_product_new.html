@@ -16,6 +16,11 @@
                 </div>
             </div>
             <div class="row p-2">
+                <div class="col-md-6">
+                    {{ form.image }}
+                </div>
+            </div>
+            <div class="row p-2">
                 <div class="col-md-2 mb-3">
                     <select class="form-select" name="{{ form.category.name }}">
                         <option value="" selected disabled>{{ form.category.name|capfirst }}</option>
@@ -51,9 +56,9 @@
                     </select>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <select class="form-select" name="{{ form.product_condition.name }}">
-                        <option value="" selected disabled>{{ form.product_condition.name|capfirst }}</option>
-                        {% for condition_value, condition_label in form.product_condition.field.choices %}
+                    <select class="form-select" name="{{ form.condition.name }}">
+                        <option value="" selected disabled>{{ form.condition.name|capfirst }}</option>
+                        {% for condition_value, condition_label in form.condition.field.choices %}
                             <option value="{{ condition_value }}">{{ condition_label }}</option>
                         {% endfor %}
                     </select>
