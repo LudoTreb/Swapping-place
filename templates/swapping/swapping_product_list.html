@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<div class="container-sm d-flex justify-content-around mt-5">
+<div class="container-sm d-flex justify-content-center mt-5">
     {% for product in swapping_product_list %}
     <a class="text-decoration-none text-reset" href="{{ product.get_absolute_url }}">
         <div class="card" style="width: 18rem;">
@@ -100,8 +100,8 @@
                 </div>
             {% endif %}
 
-            <div class="card-footer fs-6 text-body-secondary">
-                {{ product.created_date }}
+            <div class="card-footer text-body-secondary">
+                <i class="bi bi-clock-history"> {{ product.how_long }}</i>
             </div>
         </div>
     </a>

@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
+from django.utils import timezone
 
 
 class SwappingProduct(models.Model):
@@ -84,3 +85,21 @@ class SwappingProduct(models.Model):
 
     def get_absolute_url(self):
         return reverse("swapping_product_detail", args=[str(self.id)])
+
+    def how_long(self):
+        """Calculte since the product was posted"""
+        now = timezone.now()
+        time_difference = now - self.created_date
+
+        days, seconds = divmod(time_difference.total_seconds(), 86400)
+        hours, seconds = divmod(seconds, 3600)
+        minutes, seconds = divmod(seconds, 60)
+
+        if days >= 1:
+            return f"{int(days)} days ago"
+        elif hours >= 1:
+            return f"{int(hours)} hours ago"
+        elif minutes >= 1:
+            return f"{int(minutes)} minutes ago"
+        else:
+            return "less than a minute"
