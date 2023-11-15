@@ -48,7 +48,7 @@ class SwappingProductCreationView(CreateView):
     template_name = "swapping/swapping_product_new.html"
     success_url = reverse_lazy("swapping_product_list")
 
-    FIXME  # Problème de validation du formulaire avec le champ owner je pense
+    # Problème de validation du formulaire avec le champ owner je pense
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
