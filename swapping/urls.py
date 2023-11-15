@@ -10,15 +10,17 @@ from .views import (
 
 urlpatterns = [
     path(
-        "<int:pk>/", SwappingProductDetailView.as_view(), name="swapping_product_detail"
+        "<uuid:pk>/",
+        SwappingProductDetailView.as_view(),
+        name="swapping_product_detail",
     ),
     path(
-        "<int:pk>/edit/",
+        "<uuid:pk>/edit/",
         SwappingProductUpdateView.as_view(),
         name="swapping_product_edit",
     ),
     path(
-        "<int:pk>/delete/",
+        "<uuid:pk>/delete/",
         SwappingProductDeleteView.as_view(),
         name="swapping_product_delete",
     ),
