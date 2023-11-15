@@ -7,13 +7,15 @@ class SwappingProductCreationForm(forms.ModelForm):
         model = SwappingProduct
         fields = (
             "title",
+            "image",
             "category",
             "sex",
             "size",
             "color",
-            "product_condition",
+            "condition",
             "quality",
             "description",
+            "owner",
         )
         widgets = {
             "title": forms.TextInput(
@@ -21,6 +23,12 @@ class SwappingProductCreationForm(forms.ModelForm):
                     "class": "form-control form-control-sm",
                     "placeholder": "Title",
                     "aria-label": "Title",
+                }
+            ),
+            "image": forms.FileInput(
+                attrs={
+                    "class": "form-control",
+                    "aria-label": "Image",
                 }
             ),
             "category": forms.Select(
@@ -54,13 +62,13 @@ class SwappingProductCreationForm(forms.ModelForm):
                 },
                 choices=SwappingProduct.ColorChoices.choices,
             ),
-            "product_condition": forms.Select(
+            "condition": forms.Select(
                 attrs={
                     "class": "form-select",
                     "placeholder": "Condition",
                     "aria-label": "Condition",
                 },
-                choices=SwappingProduct.ProductConditionChoices.choices,
+                choices=SwappingProduct.ConditionChoices.choices,
             ),
             "quality": forms.Select(
                 attrs={
