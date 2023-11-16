@@ -22,7 +22,7 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        swapping_place = context["product"].swappingplace_set
+        swapping_place = context["product"].places
         print("hello")
         print(swapping_place)
         # Récupérer l'adresse du lieu
