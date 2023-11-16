@@ -40,7 +40,7 @@
           Condition
         </button>
         <ul class="dropdown-menu">
-            {% for condition_key, condition_value in product_list.model.ProductConditionChoices.choices %}
+            {% for condition_key, condition_value in product_list.model.ConditionChoices.choices %}
             <li><a class="dropdown-item" href="#">{{ condition_value }}</a></li>
             {% endfor %}
         </ul>
