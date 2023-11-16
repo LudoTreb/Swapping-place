@@ -46,8 +46,11 @@
         <p class="text-body-secondary">Description:</p>
         <p>{{ swapping_product.description }}</p>
     </div>
+    {% if success %}
     <div  class="border mt-3 p-3">
         <p>Carte géolocalisation</p>
+            <iframe width="100%" height="400" src="{% static 'map.html' %}"></iframe>
+    {% endif %}
     </div>
     <div class="d-grid gap-3 d-md-block mt-4">
         <button type="button" class="btn btn-info btn-lg">Message</button>
