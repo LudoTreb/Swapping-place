@@ -1,33 +1,33 @@
 from django.urls import path
 from .views import (
-    SwappingProductListView,
-    SwappingProductDetailView,
-    SwappingProductUpdateView,
-    SwappingProductDeleteView,
-    SwappingProductCreationView,
+    ProductListView,
+    ProductDetailView,
+    ProductUpdateView,
+    ProductDeleteView,
+    ProductCreationView,
 )
 
 
 urlpatterns = [
     path(
         "<uuid:pk>/",
-        SwappingProductDetailView.as_view(),
-        name="swapping_product_detail",
+        ProductDetailView.as_view(),
+        name="product_detail",
     ),
     path(
         "<uuid:pk>/edit/",
-        SwappingProductUpdateView.as_view(),
-        name="swapping_product_edit",
+        ProductUpdateView.as_view(),
+        name="product_edit",
     ),
     path(
         "<uuid:pk>/delete/",
-        SwappingProductDeleteView.as_view(),
-        name="swapping_product_delete",
+        ProductDeleteView.as_view(),
+        name="product_delete",
     ),
     path(
         "new/",
-        SwappingProductCreationView.as_view(),
-        name="swapping_product_new",
+        ProductCreationView.as_view(),
+        name="product_new",
     ),
-    path("", SwappingProductListView.as_view(), name="swapping_product_list"),
+    path("", ProductListView.as_view(), name="product_list"),
 ]

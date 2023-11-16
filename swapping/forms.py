@@ -1,10 +1,10 @@
 from django import forms
-from .models import SwappingProduct
+from .models import Product
 
 
-class SwappingProductCreationForm(forms.ModelForm):
+class ProductCreationForm(forms.ModelForm):
     class Meta:
-        model = SwappingProduct
+        model = Product
         fields = (
             "title",
             "image",
@@ -36,7 +36,7 @@ class SwappingProductCreationForm(forms.ModelForm):
                     "class": "form-select",
                     "aria-label": "Category",
                 },
-                choices=SwappingProduct.CategoryChoices.choices,
+                choices=Product.CategoryChoices.choices,
             ),
             "sex": forms.Select(
                 attrs={
@@ -44,7 +44,7 @@ class SwappingProductCreationForm(forms.ModelForm):
                     "placeholder": "Sex",
                     "aria-label": "Sex",
                 },
-                choices=SwappingProduct.SexChoices.choices,
+                choices=Product.SexChoices.choices,
             ),
             "size": forms.Select(
                 attrs={
@@ -52,7 +52,7 @@ class SwappingProductCreationForm(forms.ModelForm):
                     "placeholder": "Size",
                     "aria-label": "Size",
                 },
-                choices=SwappingProduct.SizeChoices.choices,
+                choices=Product.SizeChoices.choices,
             ),
             "color": forms.Select(
                 attrs={
@@ -60,7 +60,7 @@ class SwappingProductCreationForm(forms.ModelForm):
                     "placeholder": "Color",
                     "aria-label": "Color",
                 },
-                choices=SwappingProduct.ColorChoices.choices,
+                choices=Product.ColorChoices.choices,
             ),
             "condition": forms.Select(
                 attrs={
@@ -68,7 +68,7 @@ class SwappingProductCreationForm(forms.ModelForm):
                     "placeholder": "Condition",
                     "aria-label": "Condition",
                 },
-                choices=SwappingProduct.ConditionChoices.choices,
+                choices=Product.ConditionChoices.choices,
             ),
             "quality": forms.Select(
                 attrs={
@@ -76,7 +76,7 @@ class SwappingProductCreationForm(forms.ModelForm):
                     "placeholder": "Quality",
                     "aria-label": "Quality",
                 },
-                choices=SwappingProduct.QualityChoices.choices,
+                choices=Product.QualityChoices.choices,
             ),
             "description": forms.Textarea(
                 attrs={

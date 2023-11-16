@@ -7,58 +7,58 @@ from iso3166 import countries
 from geopy.geocoders import Nominatim
 
 
-class SwappingProduct(models.Model):
+class Product(models.Model):
     """
     Model representing a clothing
     item that the user will add to his store
     """
 
     class CategoryChoices(models.TextChoices):
-        clothing = "Clothing", "clothing"
-        shoes = "Shoes", "shoes"
+        CLOTHING = "clothing", "Clothing"
+        SHOES = "shoes", "Shoes"
 
     class SexChoices(models.TextChoices):
-        women = "Women", "women"
-        man = "Man", "man"
-        kid = "Kid", "kid"
+        WOMEN = "women", "Women"
+        MAN = "man", "Man"
+        KID = "kid", "Kid"
 
     class SizeChoices(models.TextChoices):
-        xs = "XS", "xs"
-        s = "S", "s"
-        m = "M", "m"
-        l = "L", "l"
-        xl = "XL", "xl"
-        xxl = "XXL", "xxl"
+        XS = "xs", "XS"
+        S = "s", "S"
+        M = "m", "M"
+        L = "l", "L"
+        XL = "xl", "XL"
+        XXL = "xxl", "XXL"
 
     class ConditionChoices(models.TextChoices):
-        new = "New", "new"
-        as_new = "As new", "as new"
-        very_good_condition = "Very good condition", "very good condition"
-        good_condition = "Good condition", "good condition"
-        fair_condition = "Fair condition", "fair condition"
-        worn = "Worn", "worn"
+        NEW = "new", "Brand New"
+        AS_NEW = "as_new", "As New"
+        VERY_GOOD = "very_goog", "Very Good Condition"
+        GOOD = "good", "Good Condition"
+        FAIR = "fair", "Fair Condition"
+        WORN = "worn", "Worn"
 
     class ColorChoices(models.TextChoices):
-        black = "Black", "black"
-        white = "White", "white"
-        red = "Red", "red"
-        green = "Green", "green"
-        blue = "Blue", "blue"
-        yellow = "Yellow", "yellow"
-        orange = "Orange", "orange"
-        pink = "Pink", "pink"
-        purple = "Purple", "purple"
-        brown = "Brown", "brown"
-        silver = "Silver", "silver"
-        gold = "Gold", "gold"
+        BLACK = "black", "Black"
+        WHITE = "white", "White"
+        RED = "red", "Red"
+        GREEN = "green", "Green"
+        BLUE = "blue", "Blue"
+        YELLOW = "yellow", "Yellow"
+        ORANGE = "orange", "Orange"
+        PINK = "pink", "Pink"
+        PURPLE = "purple", "Purple"
+        BROWN = "brown", "Brown"
+        SILVER = "silver", "Silver"
+        GOLD = "gold", "Gold"
 
     class QualityChoices(models.TextChoices):
-        poor = "Poor", "poor"
-        low_quality = "Low-quality", "low-quality"
-        good = "Good", "good"
-        excellent = "Excellent", "excellent"
-        luxurious = "Luxurious", "luxurious"
-        custom_made = "Custom-made", "custom-made"
+        POOR = "poor", "Poor"
+        LOW = "low_quality", "Low Quality"
+        GOOD = "good", "Good"
+        EXCELLENT = "excellent", "Excellent"
+        LUXURIOUS = "Luxurious", "Luxurious"
+        CUSTOM_MADE = "custom_made", "Custom-Made"
 
     id = models.UUIDField(
         primary_key=True,
@@ -86,7 +86,7 @@ class SwappingProduct(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("swapping_product_detail", args=[str(self.id)])
+        return reverse("product_detail", args=[str(self.id)])
 
     def how_long(self):
         """Calculte since the product was posted"""
@@ -107,7 +107,7 @@ class SwappingProduct(models.Model):
             return "less than a minute"
 
 
-class SwappingAddress(models.Model):
+class Address(models.Model):
     """An Model of address"""
 
     number_address = models.CharField(max_length=20, help_text="Number")
@@ -125,16 +125,19 @@ class SwappingAddress(models.Model):
         return f"{self.number_address} {self.address} {self.zip_code} {self.city} {data['country']}"
 
 
-class SwappingPlace(models.Model):
+class Place(models.Model):
     """Create a model of shop associate with an user and an address"""
 
     name = models.CharField(max_length=30)
-    product = models.ForeignKey(SwappingProduct, on_delete=models.CASCADE)
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="places"
     )
-    address = models.OneToOneField(SwappingAddress, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="places"
+    )
+    address = models.OneToOneField(
+        Address, on_delete=models.CASCADE, related_name="places"
+    )
 
     def __str__(self):
         return self.name
