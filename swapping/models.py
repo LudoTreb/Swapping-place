@@ -3,6 +3,8 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from django.utils import timezone
+from iso3166 import countries
+from geopy.geocoders import Nominatim
 
 
 class SwappingProduct(models.Model):
@@ -103,3 +105,52 @@ class SwappingProduct(models.Model):
             return f"{int(minutes)} minutes ago"
         else:
             return "less than a minute"
+
+
+class SwappingAddress(models.Model):
+    """An Model of address"""
+
+    number_address = models.CharField(max_length=20, help_text="Number")
+    address = models.CharField(max_length=1024, help_text="Address, road")
+    zip_code = models.CharField(max_length=32)
+    city = models.CharField(max_length=1024)
+    country = models.CharField(
+        max_length=2,
+        choices=[(country.alpha2.lower(), country.name) for country in countries],
+    )
+
+    def __str__(self):
+        data = self.__dict__.copy()
+        data.update(country=self.get_country_display().upper())
+        return f"{self.number_address} {self.address} {self.zip_code} {self.city} {data['country']}"
+
+
+class SwappingPlace(models.Model):
+    """Create a model of shop associate with an user and an address"""
+
+    name = models.CharField(max_length=30)
+    product = models.ForeignKey(SwappingProduct, on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    address = models.OneToOneField(SwappingAddress, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    def get_coordinates(self):
+        """Get coordinates, latitude & longitude from an address"""
+        geolocator = Nominatim(user_agent="swapping_place")
+        location = geolocator.geocode(self.address)
+        return location.latitude, location.longitude
+
+    def get_on_map(self):
+        """create a map to locate the shop"""
+        coordinates = get_coordinates()
+        if coordinates:
+            map_object = folium.Map(location=coordinates, zoom_start=15)
+            folium.Marker(location=coordinates, popup=address).add_to(map_object)
+            map_object.save("map.html")
+            return True
+        return False
