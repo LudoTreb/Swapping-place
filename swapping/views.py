@@ -19,6 +19,23 @@ class SwappingProductDetailView(DetailView):
     context_object_name = "swapping_product"
     template_name = "swapping/swapping_product_detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        swapping_place = context["swapping_product"].swappingplace_set
+        print("hello")
+        print(swapping_place)
+        # Récupérer l'adresse du lieu
+        address = swapping_place.address
+
+        # Générez la carte et obtenez le succès
+        success = get_on_map(address)
+
+        # Ajoutez la variable 'success' au contexte
+        context["success"] = success
+
+        return context
+
 
 class SwappingProductUpdateView(UpdateView):
     model = SwappingProduct
@@ -48,7 +65,7 @@ class SwappingProductCreationView(CreateView):
     template_name = "swapping/swapping_product_new.html"
     success_url = reverse_lazy("swapping_product_list")
 
-    # Problème de validation du formulaire avec le champ owner je pense
+    # FIXME Problème de validation du formulaire avec le champ owner ne se rempli pas automatiquement avec le user connecté
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
