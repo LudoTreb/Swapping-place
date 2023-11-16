@@ -1,27 +1,44 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from .models import SwappingProduct
+from .models import Product
 from django.urls import reverse_lazy
-from .forms import SwappingProductCreationForm
+from .forms import ProductCreationForm
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-class SwappingProductListView(ListView):
-    model = SwappingProduct
-    context_object_name = "swapping_product_list"
-    template_name = "swapping/swapping_product_list.html"
+class ProductListView(ListView):
+    model = Product
+    context_object_name = "product_list"
+    template_name = "swapping/product_list.html"
 
 
-class SwappingProductDetailView(DetailView):
-    model = SwappingProduct
-    context_object_name = "swapping_product"
-    template_name = "swapping/swapping_product_detail.html"
+class ProductDetailView(DetailView):
+    model = Product
+    context_object_name = "product"
+    template_name = "swapping/product_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        swapping_place = context["product"].swappingplace_set
+        print("hello")
+        print(swapping_place)
+        # Récupérer l'adresse du lieu
+        address = swapping_place.address
+
+        # Générez la carte et obtenez le succès
+        success = get_on_map(address)
+
+        # Ajoutez la variable 'success' au contexte
+        context["success"] = success
+
+        return context
 
 
-class SwappingProductUpdateView(UpdateView):
-    model = SwappingProduct
+class ProductUpdateView(UpdateView):
+    model = Product
     fields = (
         "title",
         "category",
@@ -32,23 +49,23 @@ class SwappingProductUpdateView(UpdateView):
         "condition",
         "quality",
     )
-    template_name = "swapping/swapping_product_edit.html"
+    template_name = "swapping/product_edit.html"
 
 
-class SwappingProductDeleteView(DeleteView):
-    model = SwappingProduct
-    context_object_name = "swapping_product"
-    template_name = "swapping/swapping_product_delete.html"
-    success_url = reverse_lazy("swapping_product_list")
+class ProductDeleteView(DeleteView):
+    model = Product
+    context_object_name = "product"
+    template_name = "swapping/product_delete.html"
+    success_url = reverse_lazy("product_list")
 
 
-class SwappingProductCreationView(CreateView):
-    model = SwappingProduct
-    form_class = SwappingProductCreationForm
-    template_name = "swapping/swapping_product_new.html"
-    success_url = reverse_lazy("swapping_product_list")
+class ProductCreationView(CreateView):
+    model = Product
+    form_class = ProductCreationForm
+    template_name = "swapping/product_new.html"
+    success_url = reverse_lazy("product_list")
 
-    # Problème de validation du formulaire avec le champ owner je pense
+    # FIXME Problème de validation du formulaire avec le champ owner ne se rempli pas automatiquement avec le user connecté
 
     def form_valid(self, form):
         form.instance.owner = self.request.user

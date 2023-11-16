@@ -10,7 +10,7 @@
           Genre
         </button>
         <ul class="dropdown-menu">
-            {% for sex_key, sex_value in swapping_product_list.model.SexChoices.choices %}
+            {% for sex_key, sex_value in product_list.model.SexChoices.choices %}
             <li><a class="dropdown-item" href="#">{{ sex_value }}</a></li>
             {% endfor %}
         </ul>
@@ -20,7 +20,7 @@
           Category
         </button>
         <ul class="dropdown-menu">
-            {% for category_key, category_value in swapping_product_list.model.CategoryChoices.choices %}
+            {% for category_key, category_value in product_list.model.CategoryChoices.choices %}
             <li><a class="dropdown-item" href="#">{{ category_value }}</a></li>
             {% endfor %}
         </ul>
@@ -30,7 +30,7 @@
           Size
         </button>
         <ul class="dropdown-menu">
-            {% for size_key, size_value in swapping_product_list.model.SizeChoices.choices %}
+            {% for size_key, size_value in product_list.model.SizeChoices.choices %}
             <li><a class="dropdown-item" href="#">{{ size_value }}</a></li>
             {% endfor %}
         </ul>
@@ -40,7 +40,7 @@
           Condition
         </button>
         <ul class="dropdown-menu">
-            {% for condition_key, condition_value in swapping_product_list.model.ProductConditionChoices.choices %}
+            {% for condition_key, condition_value in product_list.model.ProductConditionChoices.choices %}
             <li><a class="dropdown-item" href="#">{{ condition_value }}</a></li>
             {% endfor %}
         </ul>
@@ -50,7 +50,7 @@
           Color
         </button>
         <ul class="dropdown-menu">
-            {% for color_key, color_value in swapping_product_list.model.ColorChoices.choices %}
+            {% for color_key, color_value in product_list.model.ColorChoices.choices %}
             <li><a class="dropdown-item" href="#">{{ color_value }}</a></li>
             {% endfor %}
         </ul>
@@ -60,7 +60,7 @@
           Quality
         </button>
         <ul class="dropdown-menu">
-            {% for quality_key, quality_value in swapping_product_list.model.QualityChoices.choices %}
+            {% for quality_key, quality_value in product_list.model.QualityChoices.choices %}
             <li><a class="dropdown-item" href="#">{{ quality_value }}</a></li>
             {% endfor %}
         </ul>
@@ -68,7 +68,7 @@
 </div>
 
 <div class="container-sm d-flex justify-content-center mt-5">
-    {% for product in swapping_product_list %}
+    {% for product in product_list %}
     <a class="text-decoration-none text-reset" href="{{ product.get_absolute_url }}">
         <div class="card" style="width: 18rem;">
             {% if product.image %}
@@ -95,8 +95,8 @@
             </div>
             {% if user.username == product.owner.username %}
                 <div class="card-footer p-3">
-                    <a class="btn btn-outline-dark btn-sm me-2" href="{% url "swapping_product_edit" product.pk %}">Edit</a>
-                    <a class="btn btn-outline-danger btn-sm" href="{% url "swapping_product_delete" product.pk %}">Delete</a>
+                    <a class="btn btn-outline-dark btn-sm me-2" href="{% url "product_edit" product.pk %}">Edit</a>
+                    <a class="btn btn-outline-danger btn-sm" href="{% url "product_delete" product.pk %}">Delete</a>
                 </div>
             {% endif %}
 

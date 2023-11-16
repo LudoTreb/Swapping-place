@@ -1,4 +1,6 @@
 from django.contrib import admin
-from .models import SwappingProduct
+from .models import Product, Address, Place
 
-admin.site.register(SwappingProduct)
+admin.site.register(Product)
+admin.site.register(Address)
+admin.site.register(Place)

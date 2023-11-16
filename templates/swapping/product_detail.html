@@ -2,23 +2,23 @@
 
 {% load static %}
 
-{% block title %}{{ swapping_product.title }}{% endblock title %}
+{% block title %}{{ product.title }}{% endblock title %}
 
 {% block content %}
 
 <div class="container-sm col-6">
         <div class="col align-items-center p-5">
             <div class="container col-md-4">
-                <img class="img-thumbnail" src="{{ swapping_product.image.url }}" alt=""> 
+                <img class="img-thumbnail" src="{{ product.image.url }}" alt=""> 
             </div>
         </div>
         <hr>
     <div class="container text-center p-3">
         <div class="row align-items-center">
-            <p class="col-6 fs-4 fw-bold text-start">{{ swapping_product.title|upper }}</p>
-            <p class="col ">{{ swapping_product.how_long }}</p>
+            <p class="col-6 fs-4 fw-bold text-start">{{ product.title|upper }}</p>
+            <p class="col ">{{ product.how_long }}</p>
             <p class="col ">distance</p>
-            {% if swapping_product.is_favorite %}
+            {% if product.is_favorite %}
                 <i class="col align-self-start fs-3 bi bi-heart-fill "></i>
             {% else %}
             <i class="col align-self-start fs-3 bi bi-heart"></i>
@@ -28,15 +28,15 @@
     <div class="bg-light row m-0">
         <div class="col p-2">
             <p class="text-center">Size</p>
-            <p class="text-center fw-bold">{{ swapping_product.size }}</p>
+            <p class="text-center fw-bold">{{ product.size }}</p>
         </div>
         <div class="col p-2">
             <p class="text-center">Condition</p>
-            <p class="text-center fw-bold">{{ swapping_product.condition }}</p>
+            <p class="text-center fw-bold">{{ product.condition }}</p>
         </div>
         <div class="col p-2">
             <p class="text-center">Color</p>
-            <p class="col text-center fw-bold">{{ swapping_product.color }}</p>
+            <p class="col text-center fw-bold">{{ product.color }}</p>
         </div>
     </div>
     <div class="d-grid mx-auto">
@@ -44,10 +44,13 @@
     </div>
     <div class="border p-3">
         <p class="text-body-secondary">Description:</p>
-        <p>{{ swapping_product.description }}</p>
+        <p>{{ product.description }}</p>
     </div>
+    {% if success %}
     <div  class="border mt-3 p-3">
         <p>Carte géolocalisation</p>
+            <iframe width="100%" height="400" src="{% static 'map.html' %}"></iframe>
+    {% endif %}
     </div>
     <div class="d-grid gap-3 d-md-block mt-4">
         <button type="button" class="btn btn-info btn-lg">Message</button>
