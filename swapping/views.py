@@ -65,12 +65,6 @@ class ProductCreationView(CreateView):
     template_name = "swapping/product_new.html"
     success_url = reverse_lazy("product_list")
 
-    # FIXME Problème de validation du formulaire avec le champ owner ne se rempli pas automatiquement avec le user connecté
-
     def form_valid(self, form):
         form.instance.owner = self.request.user
-        logger.info(form.cleaned_data)
-        print(form.is_valid())
-        print(form.cleaned_data)
-        print(form.errors)
         return super().form_valid(form)
