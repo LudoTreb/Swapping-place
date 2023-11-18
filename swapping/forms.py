@@ -15,7 +15,6 @@ class ProductCreationForm(forms.ModelForm):
             "condition",
             "quality",
             "description",
-            "owner",
         )
         widgets = {
             "title": forms.TextInput(
