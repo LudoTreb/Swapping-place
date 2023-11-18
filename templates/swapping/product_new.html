@@ -8,8 +8,9 @@
 <div class="container-sm p-5">
     <h1 class="ms-2">New clothe</h1>
     <div class="form-group">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            
             <div class="row p-2">
                 <div class="col-md-6">
                     {{ form.title }}
@@ -17,7 +18,7 @@
             </div>
             <div class="row p-2">
                 <div class="col-md-6">
-                    {{ form.image }}
+                    {{ form.image|as_crispy_field }}
                 </div>
             </div>
             <div class="row p-2">
