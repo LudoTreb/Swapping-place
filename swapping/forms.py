@@ -1,4 +1,6 @@
 from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
 from .models import Product
 
 
@@ -19,7 +21,7 @@ class ProductCreationForm(forms.ModelForm):
         widgets = {
             "title": forms.TextInput(
                 attrs={
-                    "class": "form-control form-control-sm",
+                    "class": "form-control form-control",
                     "placeholder": "Title",
                     "aria-label": "Title",
                 }
@@ -27,6 +29,7 @@ class ProductCreationForm(forms.ModelForm):
             "image": forms.FileInput(
                 attrs={
                     "class": "form-control",
+                    "enctype": "multipart/form-data",
                     "aria-label": "Image",
                 }
             ),
@@ -34,6 +37,7 @@ class ProductCreationForm(forms.ModelForm):
                 attrs={
                     "class": "form-select",
                     "aria-label": "Category",
+                    "placeholder": "Category",
                 },
                 choices=Product.CategoryChoices.choices,
             ),
@@ -85,3 +89,23 @@ class ProductCreationForm(forms.ModelForm):
                 }
             ),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Column("title", css_class="form-group col-md-6"),
+            Column("image", css_class="form-group col-md-6"),
+            Row(
+                Column("category", css_class="col-md-2"),
+                Column("sex", css_class="col-md-2"),
+                Column("size", css_class="col-md-2"),
+            ),
+            Row(
+                Column("color", css_class="col-md-2"),
+                Column("condition", css_class="col-md-2"),
+                Column("quality", css_class="col-md-2"),
+            ),
+            Column("description", css_class="form-group col-md-6"),
+            Submit("submit", "New"),
+        )
