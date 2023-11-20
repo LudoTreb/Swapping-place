@@ -70,7 +70,7 @@
 <div class="container-sm d-flex justify-content-center mt-5">
     {% for product in product_list %}
     <a class="text-decoration-none text-reset" href="{{ product.get_absolute_url }}">
-        <div class="card" style="width: 18rem;">
+        <div class="card ms-5" style="width: 18rem;">
             {% if product.image %}
                 <img class="img-thumbnail" style="border-radius: 0%;" src="{{ product.image.url }}" alt="">    
             {% endif %}
