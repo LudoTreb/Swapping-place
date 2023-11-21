@@ -49,10 +49,11 @@
     {% if success %}
     <div  class="border mt-3 p-3">
         <p>Carte géolocalisation</p>
-            <iframe width="100%" height="400" src="{% static 'map.html' %}"></iframe>
+        {% comment %}  Attention la map est codé en dur  {% endcomment %}
+            <iframe width="100%" height="400" src="{% static 'map.html' %}"></iframe> 
     {% endif %}
     </div>
-    <div class="d-grid gap-3 d-md-block mt-4">
+    <div class="d-grid gap-2 d-md-block mt-4">
         <button type="button" class="btn btn-info btn-lg">Message</button>
         <button type="button" class="btn btn-success btn-lg">Reserve</button>
         <button type="button" class="btn btn-outline-secondary btn-lg">Back</button>
