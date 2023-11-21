@@ -14,6 +14,15 @@ class ProductListView(ListView):
     template_name = "swapping/product_list.html"
 
 
+class MyProductListView(ListView):
+    model = Product
+    context_object_name = "my_product_list"
+    template_name = "swapping/my_product_list.html"
+
+    def get_queryset(self):
+        return Product.objects.filter(owner=self.request.user.id)
+
+
 class ProductDetailView(DetailView):
     model = Product
     context_object_name = "product"

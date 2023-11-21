@@ -5,6 +5,7 @@ from .views import (
     ProductUpdateView,
     ProductDeleteView,
     ProductCreationView,
+    MyProductListView,
 )
 
 
@@ -30,4 +31,5 @@ urlpatterns = [
         name="product_new",
     ),
     path("", ProductListView.as_view(), name="product_list"),
+    path("my-products", MyProductListView.as_view(), name="my_product_list"),
 ]
