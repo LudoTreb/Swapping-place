@@ -22,14 +22,10 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        swapping_place = context["product"].places
-        print("hello")
-        print(swapping_place)
-        # Récupérer l'adresse du lieu
-        address = swapping_place.address
+        place = context["product"].places.get()
 
         # Générez la carte et obtenez le succès
-        success = get_on_map(address)
+        success = place.get_on_map()
 
         # Ajoutez la variable 'success' au contexte
         context["success"] = success
