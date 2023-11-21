@@ -9,7 +9,7 @@
         <h2 class="text-start w-75">Welcome to the SwappingPlace, where you can donate and collect clothes</h2>
         <div class=" d-flex mt-4">
             {% if user.is_authenticated %}
-            <a class="btn btn-dark" href="#" role="button">➡️ Your SwappingPlace</a>
+            <a class="btn btn-dark" href="{% url "my_product_list" %}" role="button">➡️ Your SwappingPlace</a>
             {% else %}
             <a class="btn btn-dark" href="#" role="button">Create your SwappingPlace</a>
             <a class="btn btn-outline-secondary ms-4" href="#" role="button">How it works</a>
