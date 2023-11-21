@@ -5,6 +5,8 @@ from django.conf import settings
 from django.utils import timezone
 from iso3166 import countries
 from geopy.geocoders import Nominatim
+import folium
+from pathlib import Path
 
 
 class Product(models.Model):
@@ -150,10 +152,15 @@ class Place(models.Model):
 
     def get_on_map(self):
         """create a map to locate the shop"""
-        coordinates = get_coordinates()
+        coordinates = self.get_coordinates()
         if coordinates:
             map_object = folium.Map(location=coordinates, zoom_start=15)
-            folium.Marker(location=coordinates, popup=address).add_to(map_object)
-            map_object.save("map.html")
+            folium.Marker(location=coordinates, popup=str(self.address)).add_to(
+                map_object
+            )
+            static_dir = settings.STATICFILES_DIRS[0]
+            # FIXME Attention la map est en dur, la rendre dynamique avec l'id de la boutique
+            map_path = static_dir / "map.html"
+            map_object.save(map_path)
             return True
         return False
