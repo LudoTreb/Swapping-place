@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}How it works{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="container p-5">
+        <h1 class="text-start w-75">How does it work? </h1>
+        <p>
+            SwappingPlace, the platform dedicated to clothing donations and
+            exchanges among users. SwappingPlace provides an innovative alternative
+            for refreshing your wardrobe without resorting to traditional purchases.
+            Discover clothing that finds a new life with a straightforward process:
+            reserve an item online and pick it up from the donor.
+        <p/>
+    </div>
+</div>
+<div class="container-fluid bg-light">
+    <div class="container-sm p-5">
+        <h2 class="text-start w-75">Donate</h2>
+        <p>
+            To become a Donor, you first need to create an account.
+            Then create your online store. All you have to do is enter 
+            a postal address and add clothes. 
+            You wait for a collector to reserve one of your garments,
+            then you agree on a date for them to pick it up.
+            That's all there is to it. 
+        </p>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="container-sm p-5">
+        <h2 class="text-start w-75">Collector</h2>
+        <p>
+            To become a Collector, you just need to create an account.
+            Look for a garment you like, reserve it and 
+            agree with the donor on a date to pick it up.
+        </p>
+    </div>
+</div>
+<div class="container-fluid bg-light">
+    <div class="container-sm p-5">
+        <h2 class="text-start w-75">Start now</h2>
+        <div class=" d-flex mt-4">
+            {% if user.is_authenticated %}
+                <a class="btn btn-dark" href="#" role="button">Create your SwappingPlace</a>
+            {% else %}
+                <a class="btn btn-dark" href="{% url "signup" %}" role="button">Sign Up</a>
+                <a class="btn btn-outline-secondary ms-4" href="{% url "login" %}" role="button">Log In</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
