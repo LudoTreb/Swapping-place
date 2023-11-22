@@ -128,7 +128,7 @@ class Address(models.Model):
 
 
 class Place(models.Model):
-    """Create a model of shop associate with an user and an address"""
+    """Create a model of shop associate with an user, products and an address"""
 
     name = models.CharField(max_length=30)
     product = models.ForeignKey(

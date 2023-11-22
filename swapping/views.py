@@ -1,8 +1,13 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from .models import Product
+from .models import Product, Place
 from django.urls import reverse_lazy
-from .forms import ProductCreationForm
+from .forms import (
+    ProductCreationForm,
+    PlaceCreationForm,
+    AddressCreationForm,
+    PlaceAddressFormSet,
+)
 import logging
 
 logger = logging.getLogger(__name__)
@@ -72,4 +77,34 @@ class ProductCreationView(CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+
+class PlaceCreationView(CreateView):
+    model = Place
+    form_class = PlaceCreationForm
+    template_name = "swapping/place_new.html"
+    success_url = reverse_lazy("my_product_list")
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data["addresses"] = PlaceAddressFormSet(self.request.POST, prefix="address")
+        else:
+            data["addresses"] = PlaceAddressFormSet(prefix="address")
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        addresses = context["addresses"]
+        with transaction.atomic():
+            form.instance.owner = self.request.user
+            self.object = form.save()
+
+            if addresses.is_valid():
+                for address_form in addresses:
+                    address = address_form.save(commit=False)
+                    address.place = self.object
+                    address.save()
+
         return super().form_valid(form)

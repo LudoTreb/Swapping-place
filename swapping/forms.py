@@ -1,7 +1,9 @@
 from django import forms
+from django.forms import BaseFormSet
+from django.forms import formset_factory
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
-from .models import Product
+from .models import Product, Address, Place
 
 
 class ProductCreationForm(forms.ModelForm):
@@ -109,3 +111,51 @@ class ProductCreationForm(forms.ModelForm):
             Column("description", css_class="form-group col-md-6"),
             Submit("submit", "New"),
         )
+
+
+class AddressCreationForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = (
+            "number_address",
+            "address",
+            "zip_code",
+            "city",
+            "country",
+        )
+
+
+class PlaceCreationForm(forms.ModelForm):
+    class Meta:
+        model = Place
+        fields = (
+            "name",
+            "product",
+        )
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control",
+                    "placeholder": "name",
+                    "aria-label": "name",
+                }
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PlaceCreationForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            "name", "product", Submit("submit", "New Swapping Place")
+        )
+
+
+class PlaceAddressFormSet(BaseFormSet):
+    def add_fields(self, form, index):
+        super().add_fields(form, index)
+        form.nested = AddressCreationForm(prefix=f"address-{index}")
+
+
+PlaceAddressFormSet = formset_factory(
+    AddressCreationForm, formset=PlaceAddressFormSet, extra=1, can_delete=True
+)
