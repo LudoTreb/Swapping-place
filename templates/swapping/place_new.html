@@ -8,13 +8,7 @@
 <div class="container-sm p-5">
     <h1>New place</h1>
     <form method="post">
-    {% csrf_token %}
-    {% crispy form %}
-    {{ addresses.management_form }}
-    {% for address_form in addresses.forms %}
-      {% crispy address_form %}
-    {% endfor %}
-    <button type="submit">Create Place</button>
+      {% crispy form %}
   </form>
 </div>
 {% endblock content %}
