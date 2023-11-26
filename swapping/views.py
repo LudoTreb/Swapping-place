@@ -1,11 +1,11 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from .models import Product
+from .models import Product, Place
 from django.urls import reverse_lazy
-from .forms import ProductCreationForm
-import logging
-
-logger = logging.getLogger(__name__)
+from .forms import (
+    ProductCreationForm,
+    PlaceCreateForm,
+)
 
 
 class ProductListView(ListView):
@@ -69,6 +69,17 @@ class ProductCreationView(CreateView):
     form_class = ProductCreationForm
     template_name = "swapping/product_new.html"
     success_url = reverse_lazy("product_list")
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+
+class PlaceCreateView(CreateView):
+    model = Place
+    form_class = PlaceCreateForm
+    template_name = "swapping/place_new.html"
+    success_url = reverse_lazy("my_product_list")
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
