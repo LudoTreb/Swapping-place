@@ -1,4 +1,5 @@
 from django import forms
+from iso3166 import countries
 from django.forms import BaseFormSet
 from django.forms import formset_factory
 from crispy_forms.helper import FormHelper
@@ -113,49 +114,86 @@ class ProductCreationForm(forms.ModelForm):
         )
 
 
-class AddressCreationForm(forms.ModelForm):
+class PlaceCreateForm(forms.ModelForm):
+    number_address = forms.CharField(label="Number", help_text="number of the road")
+    address = forms.CharField(label="Address", help_text="name of the road")
+    zip_code = forms.CharField(label="Zip Code")
+    city = forms.CharField(label="City")
+    country = forms.ChoiceField(
+        label="Country",
+        choices=[("", "Select country")]
+        + [(country.alpha2.lower(), country.name) for country in countries],
+    )
+
     class Meta:
-        model = Address
-        fields = (
+        model = Place
+        fields = [
+            "name",
             "number_address",
             "address",
             "zip_code",
             "city",
             "country",
-        )
+        ]
 
-
-class PlaceCreationForm(forms.ModelForm):
-    class Meta:
-        model = Place
-        fields = (
-            "name",
-            "product",
-        )
         widgets = {
             "name": forms.TextInput(
                 attrs={
                     "class": "form-control form-control",
-                    "placeholder": "name",
-                    "aria-label": "name",
+                    "placeholder": "Name",
+                    "aria-label": "Name",
                 }
+            ),
+            "number_address": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control",
+                    "placeholder": "Number Address",
+                    "aria-label": "number address",
+                }
+            ),
+            "address": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control",
+                    "placeholder": "address",
+                    "aria-label": "address",
+                }
+            ),
+            "zip_code": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control",
+                    "placeholder": "zip_code",
+                    "aria-label": "zip_code",
+                }
+            ),
+            "city": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control",
+                    "placeholder": "city",
+                    "aria-label": "city",
+                }
+            ),
+            "country": forms.Select(
+                attrs={
+                    "class": "form-select",
+                    "placeholder": "Country",
+                    "aria-label": "Country",
+                },
             ),
         }
 
     def __init__(self, *args, **kwargs):
-        super(PlaceCreationForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
         self.helper.layout = Layout(
-            "name", "product", Submit("submit", "New Swapping Place")
+            Column("name", css_class="form-group col-md-6"),
+            Row(
+                Column("number_address", css_class="form-group col-md-2"),
+                Column("address", css_class="col-md-4"),
+            ),
+            Row(
+                Column("zip_code", css_class="form-group col-md-2"),
+                Column("city", css_class="form-group col-md-2"),
+                Column("country", css_class="form-group col-md-2"),
+            ),
+            Submit("submit", "New Swapping Place"),
         )
-
-
-class PlaceAddressFormSet(BaseFormSet):
-    def add_fields(self, form, index):
-        super().add_fields(form, index)
-        form.nested = AddressCreationForm(prefix=f"address-{index}")
-
-
-PlaceAddressFormSet = formset_factory(
-    AddressCreationForm, formset=PlaceAddressFormSet, extra=1, can_delete=True
-)
