@@ -19,8 +19,31 @@ class MyProductListView(ListView):
     context_object_name = "my_product_list"
     template_name = "swapping/my_product_list.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Récupérer la Place associée à l'utilisateur actuel
+        user_places = Place.objects.filter(owner=self.request.user)
+
+        # Vérifier si l'utilisateur a au moins une Place
+        if user_places.exists():
+            # Passer le nom de la première place au contexte
+            context["places"] = user_places
+
+        return context
+
     def get_queryset(self):
-        return Product.objects.filter(owner=self.request.user.id)
+        # Récupérer la Place associée à l'utilisateur actuel
+        user_places = Place.objects.filter(owner=self.request.user)
+
+        # Vérifier si l'utilisateur a au moins une Place
+        if user_places.exists():
+            # Récupérer les produits associés à toutes les places
+            place_products = Product.objects.filter(places__in=user_places)
+            return place_products
+        else:
+            # Si l'utilisateur n'a pas de Place, retourner une queryset vide
+            return Product.objects.none()
 
 
 class ProductDetailView(DetailView):
