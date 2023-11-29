@@ -1,11 +1,9 @@
-from django.views.generic import ListView, DetailView
-from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from .models import Product, Place
 from django.urls import reverse_lazy
-from .forms import (
-    ProductCreationForm,
-    PlaceCreateForm,
-)
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from .forms import PlaceCreateForm, ProductCreationForm
+from .models import Place, Product
 
 
 class ProductListView(ListView):
@@ -51,18 +49,19 @@ class ProductDetailView(DetailView):
     context_object_name = "product"
     template_name = "swapping/product_detail.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    # FIXME erreur dans la récupération de la map
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
 
-        place = context["product"].places.get()
+    #     place = context["product"].places.get()
 
-        # Générez la carte et obtenez le succès
-        success = place.get_on_map()
+    #     # Générez la carte et obtenez le succès
+    #     success = place.get_on_map()
 
-        # Ajoutez la variable 'success' au contexte
-        context["success"] = success
+    #     # Ajoutez la variable 'success' au contexte
+    #     context["success"] = success
 
-        return context
+    #     return context
 
 
 class ProductUpdateView(UpdateView):
