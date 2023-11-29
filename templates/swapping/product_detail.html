@@ -7,16 +7,17 @@
 {% block content %}
 
 <div class="container-sm col-6">
-        <div class="col align-items-center p-5">
-            <div class="container col-md-4">
-                <img class="img-thumbnail" src="{{ product.image.url }}" alt=""> 
-            </div>
+    
+    <div class="col align-items-center p-5">
+        <div class="container col-md-4">
+            <img class="img-thumbnail" src="{{ product.image.url }}" alt=""> 
         </div>
-        <hr>
+    </div>
+    <hr>
     <div class="container text-center p-3">
         <div class="row align-items-center">
             <p class="col-6 fs-4 fw-bold text-start">{{ product.title|upper }}</p>
-            <p class="col ">{{ product.how_long }}</p>
+            <p class="col-3 "><i class="bi bi-clock-history"> {{ product.how_long }}</i></p>
             <p class="col ">distance</p>
             {% if product.is_favorite %}
                 <i class="col align-self-start fs-3 bi bi-heart-fill "></i>
@@ -47,17 +48,18 @@
         <p>{{ product.description }}</p>
     </div>
     {% if success %}
-    <div  class="border mt-3 p-3">
-        <p>Carte géolocalisation</p>
-        {% comment %}  Attention la map est codé en dur  {% endcomment %}
-            <iframe width="100%" height="400" src="{% static 'map.html' %}"></iframe> 
+        <div  class="border mt-3 p-3">
+            <p>Carte géolocalisation</p>
+            {% comment %}  Attention la map est codé en dur  {% endcomment %}
+                <iframe width="100%" height="400" src="{% static 'map.html' %}"></iframe> 
+        </div>
     {% endif %}
-    </div>
     <div class="d-grid gap-2 d-md-block mt-4">
         <button type="button" class="btn btn-info btn-lg">Message</button>
         <button type="button" class="btn btn-success btn-lg">Reserve</button>
         <button type="button" class="btn btn-outline-secondary btn-lg">Back</button>
     </div>
+    
 </div>
 
 {% endblock content %}
